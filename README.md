@@ -1,4 +1,24 @@
-La idea consistirá en un bot de discord donde te permitirá jugar un minijuego estilo "modo carrera" de fútbol, es decir, podrás jugar temporadas simulando ser un futbolista.
-Al comparar con tus amigos en un grupo de discord aumentaría la competitividad de quién lo haría mejor o quién tendría mayor suerte, ya que aquí la suerte deberá de ser tu mayor aliada.
-Podrás elegir entre las mejores ligas de europa y sus equipos, donde podrás escoger en que posición jugar, partido a partido, irás viendo tus estadísticas personales, como goles, estadísticas, goles encajados, etc. En parte dependiendo de la posición. La cual afectará a que eventos como lesiones, penaltis, tarjetas amarillas o rojas. tengan más o menos probabilidad de aparición, haciendo que cada vez que escojas equipo y posición, a parte de cambiar las competiciones y equipos contra los que juegues, tengas una expereiencia lo más distinta a la anterior.
-El proyecto se hará en python, utilizando VSC como IDE, y como hemos mencionado antes, la idea es que sea utilizable como bot de discord, para que lo puedas añadir a los grupos que quieras y puedas disfrutarlo con tus amigos,
+# Bot de Discord - Modo Carrera de Fútbol  
+
+## Descripción  
+Este proyecto consiste en un bot de Discord que permitirá jugar un minijuego estilo "modo carrera" de fútbol. Los jugadores podrán simular temporadas como futbolistas y comparar sus carreras con amigos en un servidor de Discord.  
+
+## Características  
+- **Modo Carrera**: Simula la vida de un futbolista durante varias temporadas.  
+- **Competitividad**: Compara tu desempeño con el de tus amigos.  
+- **Ligas y Equipos**: Elige entre las mejores ligas de Europa y sus distintos equipos.  
+- **Posiciones**: Escoge en qué posición jugar, lo que afectará tus estadísticas y eventos en cada partido.  
+- **Eventos Aleatorios**: Factores como lesiones, penaltis, tarjetas amarillas o rojas afectarán a tu partida.  
+
+## Mecánica del Juego  
+1. **Selección de equipo y posición**  
+2. **Simulación de partidos**  
+3. **Registro de estadísticas personales** (goles, asistencias, goles encajados, etc.)  
+4. **Eventos aleatorios** según la posición elegida  
+5. **Comparación de rendimiento con amigos** (clasificación, estadísticas, torneos, etc.)
+
+## Tecnologías Utilizadas  
+- Se usará python como lenguaje.
+- El IDE usado será VSC.
+  
+Nuestra intención es que nuestro bot proporcione una experiencia única y distinta cada vez que juegues.
