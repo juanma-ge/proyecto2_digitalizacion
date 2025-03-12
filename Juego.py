@@ -1,20 +1,18 @@
 import random
+import discord
+from discord.ext import commands
 
-def mostrar_menu():
-    while True:
-        print("\n---- MENÚ ----")
-        print("1. Iniciar modo carrera")
-        print("2. Salir")
-        
-        opcion = input("Selecciona una opción: ")
-        if opcion == "1":
-            iniciar_modo_carrera()
-        elif opcion == "2":
-            print("Saliendo del juego...")
-            break
-        else:
-            print("Opción no válida, por favor elige una de las opciones.")
+# Configura el bot para que comience con !
+bot = commands.Bot(command_prefix="!")
 
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'✅ Bot conectado como {client.user}')
+
+# Listado de equipos.
 def mostrar_equipos():
     equipos = {
         "Premier League": ["Manchester United", "Manchester City", "Arsenal", "Chelsea", "Tottenham", "Leicester City", "Brentford", "Nottingham Forest", "Newcastle",
@@ -37,52 +35,7 @@ def mostrar_equipos():
     }
     return equipos
 
-def seleccionar_posicion():
-    posiciones = ["Portero", "Defensa", "Mediocampista", "Delantero"]
-    while True:
-        print("\nSelecciona tu posición:")
-        for i, posicion in enumerate(posiciones, 1):
-            print(f"{i}. {posicion}")
-        try:
-            opcion = int(input("Elige una posición: ")) - 1
-            if 0 <= opcion < len(posiciones):
-                return posiciones[opcion]
-            else:
-                print("Opción no válida, por favor elige una posición válida.")
-        except ValueError:
-            print("Entrada no válida, por favor ingresa un número.")
-
-def seleccionar_liga_y_equipo(equipos):
-    while True:
-        print("\nSelecciona una liga:")
-        ligas = list(equipos.keys())
-        for i, liga in enumerate(ligas, 1):
-            print(f"{i}. {liga}")
-        try:
-            opcion_liga = int(input("Elige una liga: ")) - 1
-            if 0 <= opcion_liga < len(ligas):
-                liga_seleccionada = ligas[opcion_liga]
-                break
-            else:
-                print("Opción no válida, por favor elige una liga válida.")
-        except ValueError:
-            print("Entrada no válida, por favor ingresa un número.")
-
-    while True:
-        print(f"\nSelecciona un equipo de la {liga_seleccionada}:")
-        equipos_liga = equipos[liga_seleccionada]
-        for i, equipo in enumerate(equipos_liga, 1):
-            print(f"{i}. {equipo}")
-        try:
-            opcion_equipo = int(input("Elige un equipo: ")) - 1
-            if 0 <= opcion_equipo < len(equipos_liga):
-                equipo_seleccionado = equipos_liga[opcion_equipo]
-                return liga_seleccionada, equipo_seleccionado
-            else:
-                print("Opción no válida, por favor elige un equipo válido.")
-        except ValueError:
-            print("Entrada no válida, por favor ingresa un número.")
-
+# Simulación del partido.
 def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     print(f"\n{equipo_seleccionado} vs {equipo_rival}")
     
@@ -95,53 +48,84 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     elif posicion == "Defensa":
         probabilidad_gol = 0.2
         probabilidad_asistencia = 0.15
-    else:  # Portero
+    else:  
         probabilidad_gol = 0.05
         probabilidad_asistencia = 0.1
 
     goles = 0
     asistencias = 0
-    for _ in range(3):  # Simulamos 3 oportunidades de gol o asistencia
+    for _ in range(3):  # Simulamos 3 oportunidades de gol o asistencia.
         if random.random() < probabilidad_gol:
             goles += 1
         if random.random() < probabilidad_asistencia:
             asistencias += 1
 
-    print(f"Has marcado {goles} goles y hecho {asistencias} asistencias.")
-
     resultado = random.choice(["Ganar", "Empatar", "Perder"])
     if resultado == "Ganar":
         puntos = 3
-        print(f"¡Has ganado el partido! Obtienes {puntos} puntos.")
     elif resultado == "Empatar":
         puntos = 1
-        print(f"Has empatado el partido. Obtienes {puntos} punto.")
     else:
         puntos = 0
-        print(f"Has perdido el partido. No obtienes puntos.")
 
-    return puntos
+    return puntos, goles, asistencias, resultado
 
-def iniciar_modo_carrera():
+# Comando para iniciar el modo carrera.
+@bot.command(name="iniciar_carrera")
+async def iniciar_carrera(ctx):
     equipos = mostrar_equipos()
-    posicion = seleccionar_posicion()
-    liga_seleccionada, equipo_seleccionado = seleccionar_liga_y_equipo(equipos)
+    
+    # Seleccionar posición
+    posiciones = ["Portero", "Defensa", "Mediocampista", "Delantero"]
+    posicion_msg = "Selecciona tu posición:\n"
+    for i, posicion in enumerate(posiciones, 1):
+        posicion_msg += f"{i}. {posicion}\n"
+    await ctx.send(posicion_msg)
 
-    print(f"\nHas seleccionado ser un {posicion} en el equipo {equipo_seleccionado} de la {liga_seleccionada}.")
+    def check(m):
+        return m.author == ctx.author and m.content.isdigit() and 1 <= int(m.content) <= len(posiciones)
 
+    posicion_msg = await bot.wait_for("message", check=check)
+    posicion = posiciones[int(posicion_msg.content) - 1]
+
+    # Selecciona la liga de donde escogerás a tu equipo.
+    ligas = list(equipos.keys())
+    liga_msg = "Selecciona una liga:\n"
+    for i, liga in enumerate(ligas, 1):
+        liga_msg += f"{i}. {liga}\n"
+    await ctx.send(liga_msg)
+
+    liga_msg = await bot.wait_for("message", check=check)
+    liga_seleccionada = ligas[int(liga_msg.content) - 1]
+
+    # Selecciona tu equipo.
+    equipos_liga = equipos[liga_seleccionada]
+    equipo_msg = f"Selecciona un equipo de la {liga_seleccionada}:\n"
+    for i, equipo in enumerate(equipos_liga, 1):
+        equipo_msg += f"{i}. {equipo}\n"
+    await ctx.send(equipo_msg)
+
+    equipo_msg = await bot.wait_for("message", check=check)
+    equipo_seleccionado = equipos_liga[int(equipo_msg.content) - 1]
+
+    await ctx.send(f"Has seleccionado ser un {posicion} en el equipo {equipo_seleccionado} de la {liga_seleccionada}.")
+
+    # Simula los partidos.
     equipos_rivales = equipos[liga_seleccionada].copy()
     equipos_rivales.remove(equipo_seleccionado)
     random.shuffle(equipos_rivales)
 
     puntos_totales = 0
     for equipo_rival in equipos_rivales:
-        puntos_totales += simular_partido(posicion, equipo_seleccionado, equipo_rival)
-        input("\nPresiona Enter para continuar al siguiente partido...")  # Espera a que el usuario presione Enter
+        puntos, goles, asistencias, resultado = simular_partido(posicion, equipo_seleccionado, equipo_rival)
+        puntos_totales += puntos
+        await ctx.send(f"**{equipo_seleccionado} vs {equipo_rival}**\n"
+                       f"Has marcado {goles} goles y hecho {asistencias} asistencias.\n"
+                       f"Resultado: {resultado}\n"
+                       f"Puntos obtenidos: {puntos}\n"
+                       f"Puntos totales: {puntos_totales}\n"
+                       f"Presiona Enter para continuar al siguiente partido...")
 
-    print(f"\nAl final de la temporada, has obtenido {puntos_totales} puntos.")
+    await ctx.send(f"Al final de la temporada, has obtenido {puntos_totales} puntos.")
 
-def main():
-    mostrar_menu()
-
-if __name__ == "__main__":
-    main()
+bot.run('MTM0OTM0MDYxMzM3NTY5Mjg1MQ.GhyjaM.4xBuRovfIjFwaylx0_G00VF37XVqD6htPn1u7E')
