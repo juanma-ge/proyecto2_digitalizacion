@@ -5,6 +5,7 @@ from discord.ext import commands
 # Configura el bot para que comience con !
 bot = commands.Bot(command_prefix="!")
 
+# Necesario para que el bot funcione
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
@@ -128,4 +129,4 @@ async def iniciar_carrera(ctx):
 
     await ctx.send(f"Al final de la temporada, has obtenido {puntos_totales} puntos.")
 
-bot.run('MTM0OTM0MDYxMzM3NTY5Mjg1MQ.GhyjaM.4xBuRovfIjFwaylx0_G00VF37XVqD6htPn1u7E')
+bot.run('MTM0OTM0MDI1ODQ3MDQ2MTQ1MA.GQGzTj.Fa1r3IZnFHuf4s1av1TTwOSnpzFcrTZPhccq8M')
