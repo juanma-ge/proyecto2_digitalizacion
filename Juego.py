@@ -17,17 +17,17 @@ def mostrar_menu():
 
 def mostrar_equipos():
     equipos = {
-        "Premier League": ["Manchester United", "Manchester City", "Arsenal", "Chealsea", "Tottenham", "Leicester City", "Brentford", "Nottingham Forest", "Newcastle",
-         "Bournemouth", "Aston Villa", "Fullham", "Brighton", "Crystal Palace", "West Ham", "Wolves", "Ipswich Town", "Southampton"],
+        "Premier League": ["Manchester United", "Manchester City", "Arsenal", "Chelsea", "Tottenham", "Leicester City", "Brentford", "Nottingham Forest", "Newcastle",
+         "Bournemouth", "Aston Villa", "Fulham", "Brighton", "Crystal Palace", "West Ham", "Wolves", "Ipswich Town", "Southampton"],
 
         "La Liga": ["Real Madrid", "Barcelona", "Atletico de Madrid", "Athletic Club", "Real Sociedad", "Betis", "Sevilla", "Villarreal", "Espanyol", "Rayo Vallecano", "Girona", "Osasuna", "Mallorca",
         "Las Palmas", "Getafe", "Celta", "Leganés", "Valencia", "Valladolid", "Alavés"],
 
-        "Liga Hypermotyon": ["Cádiz", "Cartagena", "Granada", "Almeria", "Burgos", "Racing de Santander", "Huesca", "Elche", "Mirandés", "Real Oviedo", "Real Sporting", "Levante", "Real Zaragoza", "RC Deportivo",
+        "Liga Hypermotion": ["Cádiz", "Cartagena", "Granada", "Almeria", "Burgos", "Racing de Santander", "Huesca", "Elche", "Mirandés", "Real Oviedo", "Real Sporting", "Levante", "Real Zaragoza", "RC Deportivo",
          "Albacete", "Eibar", "Cordoba", "Malaga", "Castellon", "Eldense", "Racing Ferrol", "Tenerife"],
 
-        "Bundesliga": ["RB Leipzig", "Bayer Leverkusen", "FC Bayern Munchen", "Eintracht Frankfurt", "SC Freiburg", "Mainz 05", " Stuttgart", "Wolfsburg", "Borussia Monchegladblach",
-          "Borussia Dortmund", "FC Augsburg", "Werder Bremen", "Union Berlin", "Hoffenheim", "FC ST Pauli", "Heindenheim", "VfL Bochum", "Holstein Kiel"],
+        "Bundesliga": ["RB Leipzig", "Bayer Leverkusen", "FC Bayern Munchen", "Eintracht Frankfurt", "SC Freiburg", "Mainz 05", "Stuttgart", "Wolfsburg", "Borussia Monchegladbach",
+          "Borussia Dortmund", "FC Augsburg", "Werder Bremen", "Union Berlin", "Hoffenheim", "FC ST Pauli", "Heidenheim", "VfL Bochum", "Holstein Kiel"],
 
         "Ligue One": ["Paris Saint Germain", "Olympique Marseille", "Nice", "Lille", "Monaco", "Olympique Lyon", "Strasbourg", "Lens", "Stade Brestois", "Toulouse", "Auxerre", "Angers SCO", "Stade Rennais", "Nantes", "Stade de Reims",
          "Saint-Étienne", "Montpellier", "Le Havre"],
@@ -83,26 +83,25 @@ def seleccionar_liga_y_equipo(equipos):
         except ValueError:
             print("Entrada no válida, por favor ingresa un número.")
 
-
 def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     print(f"\n{equipo_seleccionado} vs {equipo_rival}")
     
     if posicion == "Delantero":
-        probabilidad_gol = 0.7
-        probabilidad_asistencia = 0.3
-    elif posicion == "Mediocampista":
         probabilidad_gol = 0.5
-        probabilidad_asistencia = 0.5
-    elif posicion == "Defensa":
+        probabilidad_asistencia = 0.2
+    elif posicion == "Mediocampista":
         probabilidad_gol = 0.3
-        probabilidad_asistencia = 0.7
-    else:  
-        probabilidad_gol = 0.1
+        probabilidad_asistencia = 0.4
+    elif posicion == "Defensa":
+        probabilidad_gol = 0.2
+        probabilidad_asistencia = 0.15
+    else:  # Portero
+        probabilidad_gol = 0.05
         probabilidad_asistencia = 0.1
 
     goles = 0
     asistencias = 0
-    for _ in range(3): 
+    for _ in range(3):  # Simulamos 3 oportunidades de gol o asistencia
         if random.random() < probabilidad_gol:
             goles += 1
         if random.random() < probabilidad_asistencia:
@@ -137,6 +136,7 @@ def iniciar_modo_carrera():
     puntos_totales = 0
     for equipo_rival in equipos_rivales:
         puntos_totales += simular_partido(posicion, equipo_seleccionado, equipo_rival)
+        input("\nPresiona Enter para continuar al siguiente partido...")  # Espera a que el usuario presione Enter
 
     print(f"\nAl final de la temporada, has obtenido {puntos_totales} puntos.")
 
@@ -144,3 +144,4 @@ def main():
     mostrar_menu()
 
 if __name__ == "__main__":
+    main()
