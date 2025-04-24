@@ -1,15 +1,43 @@
 import random
+import json
+import os
+
+ARCHIVO_PARTIDA = "partida_guardada.json"
+
+def guardar_partida(datos):
+    with open(ARCHIVO_PARTIDA, 'w') as archivo:
+        json.dump(datos, archivo)
+
+def cargar_partida():
+    try:
+        with open(ARCHIVO_PARTIDA, 'r') as archivo:
+            return json.load(archivo)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return None
 
 def mostrar_menu():
+    partida_guardada = cargar_partida()
+    
     while True:
         print("\n---- MENÚ ----")
         print("1. Iniciar modo carrera")
-        print("2. Salir")
+        if partida_guardada:
+            print("2. Continuar partida guardada")
+            print("3. Salir")
+            opciones_validas = ['1', '2', '3']
+        else:
+            print("2. Salir")
+            opciones_validas = ['1', '2']
         
         opcion = input("Selecciona una opción: ")
+        
         if opcion == "1":
             iniciar_modo_carrera()
-        elif opcion == "2":
+            partida_guardada = cargar_partida()
+        elif opcion == "2" and partida_guardada:
+            continuar_partida(partida_guardada)
+            partida_guardada = cargar_partida()
+        elif opcion in opciones_validas[-1]:  # Última opción válida (Salir)
             print("Saliendo del juego...")
             break
         else:
@@ -95,7 +123,7 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     elif posicion == "Defensa":
         probabilidad_gol = 0.3
         probabilidad_asistencia = 0.7
-    else:  # Portero
+    else:  # Esta posición es la de portero
         probabilidad_gol = 0.1
         probabilidad_asistencia = 0.1
 
@@ -122,7 +150,64 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
 
     return puntos
 
+def continuar_partida(partida_guardada):
+    print("\n--- CONTINUANDO PARTIDA GUARDADA ---")
+    print(f"Posición: {partida_guardada['posicion']}")
+    print(f"Liga: {partida_guardada['liga']}")
+    print(f"Equipo: {partida_guardada['equipo']}")
+    print(f"Puntos acumulados: {partida_guardada['puntos_totales']}")
+    print(f"Partidos jugados: {len(partida_guardada['partidos_jugados'])}/{partida_guardada['total_partidos']}")
+    
+    confirmacion = input("\n¿Deseas continuar esta partida? (s/n): ").lower()
+    if confirmacion == 's':
+        equipos = mostrar_equipos()
+        equipos_rivales = equipos[partida_guardada['liga']].copy()
+        equipos_rivales.remove(partida_guardada['equipo'])
+        
+        # Filtrar equipos contra los que ya se jugó
+        equipos_restantes = [eq for eq in equipos_rivales if eq not in partida_guardada['partidos_jugados']]
+        
+        puntos_totales = partida_guardada['puntos_totales']
+        
+        for equipo_rival in equipos_restantes:
+            puntos = simular_partido(partida_guardada['posicion'], 
+                                   partida_guardada['equipo'], 
+                                   equipo_rival)
+            puntos_totales += puntos
+            
+            # Actualiza los partidos jugados
+            partida_guardada['partidos_jugados'].append(equipo_rival)
+            
+            # Guarda el progreso después de cada partido
+            datos_guardar = {
+                'posicion': partida_guardada['posicion'],
+                'liga': partida_guardada['liga'],
+                'equipo': partida_guardada['equipo'],
+                'puntos_totales': puntos_totales,
+                'partidos_jugados': partida_guardada['partidos_jugados'],
+                'total_partidos': partida_guardada['total_partidos']
+            }
+            guardar_partida(datos_guardar)
+            
+            # Verificar si se completó la temporada
+            if len(partida_guardada['partidos_jugados']) >= partida_guardada['total_partidos']:
+                print(f"\n¡Temporada completada! Puntos totales: {puntos_totales}")
+                if os.path.exists(ARCHIVO_PARTIDA):
+                    os.remove(ARCHIVO_PARTIDA)
+                break
+                
+            input("\nPresiona Enter para continuar al siguiente partido...")
+    else:
+        print("Volviendo al menú principal...")
+
 def iniciar_modo_carrera():
+    # Verificar si hay partida guardada
+    partida_guardada = cargar_partida()
+    if partida_guardada:
+        confirmacion = input("Ya tienes una partida guardada. ¿Deseas empezar una nueva? (s/n): ").lower()
+        if confirmacion != 's':
+            return
+    
     equipos = mostrar_equipos()
     posicion = seleccionar_posicion()
     liga_seleccionada, equipo_seleccionado = seleccionar_liga_y_equipo(equipos)
@@ -132,13 +217,40 @@ def iniciar_modo_carrera():
     equipos_rivales = equipos[liga_seleccionada].copy()
     equipos_rivales.remove(equipo_seleccionado)
     random.shuffle(equipos_rivales)
-
+    
+    total_partidos = len(equipos_rivales)
     puntos_totales = 0
+    partidos_jugados = []
+    
+    # Guardar estado inicial
+    datos_guardar = {
+        'posicion': posicion,
+        'liga': liga_seleccionada,
+        'equipo': equipo_seleccionado,
+        'puntos_totales': puntos_totales,
+        'partidos_jugados': partidos_jugados,
+        'total_partidos': total_partidos
+    }
+    guardar_partida(datos_guardar)
+    
     for equipo_rival in equipos_rivales:
-        puntos_totales += simular_partido(posicion, equipo_seleccionado, equipo_rival)
-        input("\nPresiona Enter para continuar al siguiente partido...")  # Espera a que el usuario presione Enter
-
-    print(f"\nAl final de la temporada, has obtenido {puntos_totales} puntos.")
+        puntos = simular_partido(posicion, equipo_seleccionado, equipo_rival)
+        puntos_totales += puntos
+        partidos_jugados.append(equipo_rival)
+        
+        # Actualiza la partida guardada
+        datos_guardar['puntos_totales'] = puntos_totales
+        datos_guardar['partidos_jugados'] = partidos_jugados
+        guardar_partida(datos_guardar)
+        
+        # Verifica si se completó la temporada
+        if len(partidos_jugados) >= total_partidos:
+            print(f"\n¡Temporada completada! Puntos totales: {puntos_totales}")
+            if os.path.exists(ARCHIVO_PARTIDA):
+                os.remove(ARCHIVO_PARTIDA)
+            break
+            
+        input("\nPresiona Enter para continuar al siguiente partido...")
 
 def main():
     mostrar_menu()
