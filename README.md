@@ -22,3 +22,10 @@ Este proyecto consiste en un bot de Discord que permitirá jugar un minijuego es
 - El IDE usado será VSC.
   
 Nuestra intención es que nuestro bot proporcione una experiencia única y distinta cada vez que juegues.
+
+## ¿Qué hace?
+- El código simula una temporada de un jugador de fútbol, pudiendo escoger la posición del campo donde quieres jugar, liga y equipo.
+- Se simulará partido a partido hasta el final de temporada, donde se obtendrán los datos finales, como goles, aasistencias o puntos totales.
+  
+## Cómo probarlo
+- Con el código puedes probarlo en IDE´s como VSC o PyCharm, aunque si quieres vivirlo como un bot de Discord, puedes agregarlo con su respectivo código y su Token que viene agregado.
