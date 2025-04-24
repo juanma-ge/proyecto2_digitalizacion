@@ -1,6 +1,7 @@
 import random
 import discord
 from discord.ext import commands
+import dotenv
 
 # Configura el bot para que comience con !
 bot = commands.Bot(command_prefix="!")
@@ -129,4 +130,4 @@ async def iniciar_carrera(ctx):
 
     await ctx.send(f"Al final de la temporada, has obtenido {puntos_totales} puntos.")
 
-bot.run('MTM0OTM1NDAwNTAyMDU0MDk3MA.GQ3ZZw.NiQqN6uZmRFalyo9ckTsUJcPMAec9xjOJNAxNY')
+bot.run(dotenv.get_key("project.env", "BOTTOKEN"))
