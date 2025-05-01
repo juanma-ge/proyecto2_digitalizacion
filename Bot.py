@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configura el bot
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.message_content = True  # Necesario para leer mensajes
 bot = commands.Bot(command_prefix="!", intents=intents)
 
