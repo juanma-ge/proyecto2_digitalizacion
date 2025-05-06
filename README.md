@@ -1,6 +1,6 @@
 # Description
-This project conssists of a lite videogame of football, also called soccer, it tries to be similar to a simulator of a football season, something similar to a career mode as a game mode that many football games have on them. 
-It is true to be very simple and easy, but that is the intention, you can play many seasons in few time, you also will compare it with your friends, choosing similar teams or leagues, or if you want choosing between all our chatalog of teams, which can be expanded in the future. This part will be expanded better and more later, but we will be collecting proposals for improvement that the users give to us
+- This project conssists of a lite videogame of football, also called soccer, it tries to be similar to a simulator of a football season, something similar to a career mode as a game mode that many football games have on them. 
+- It is true to be very simple and easy, but that is the intention, you can play many seasons in few time, you also will compare it with your friends, choosing similar teams or leagues, or if you want choosing between all our chatalog of teams, which can be expanded in the future. This part will be expanded better and more later, but we will be collecting proposals for improvement that the users give to us
 
 # Features
 Career Mode: Simulate the life of a footballer over multiple seasons.
