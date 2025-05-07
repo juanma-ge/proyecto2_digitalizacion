@@ -1,31 +1,20 @@
-# Bot de Discord - Modo Carrera de Fútbol  
+# Description
+- This project conssists of a lite videogame of football, also called soccer, it tries to be similar to a simulator of a football season, something similar to a career mode as a game mode that many football games have on them. 
+- It is true to be very simple and easy, but that is the intention, you can play many seasons in few time, you also will compare it with your friends, choosing similar teams or leagues, or if you want choosing between all our chatalog of teams, which can be expanded in the future. This part will be expanded better and more later, but we will be collecting proposals for improvement that the users give to us.
+- We want this project to be a way of entertaining to our users, but specially, a little test of what we could do in the future and maybe, a truly great videogame of football.
 
-## Descripción  
-Este proyecto consiste en un bot de Discord que permitirá jugar un minijuego estilo "modo carrera" de fútbol. Los jugadores podrán simular temporadas como futbolistas y comparar sus carreras con amigos en un servidor de Discord.  
+# Game Mechanics
 
-## Características  
-- **Modo Carrera**: Simula la vida de un futbolista durante varias temporadas.  
-- **Competitividad**: Compara tu desempeño con el de tus amigos.  
-- **Ligas y Equipos**: Elige entre las mejores ligas de Europa y sus distintos equipos.  
-- **Posiciones**: Escoge en qué posición jugar, lo que afectará tus estadísticas y eventos en cada partido.  
-- **Eventos Aleatorios**: Factores como lesiones, penaltis, tarjetas amarillas o rojas afectarán a tu partida.  
+## Your team
+The game makes you choose between six different european leagues of football, at the moment that you choose one of them, you will also have established your future opponents in the differents matches, but also and the most important election of the game. That is the team where you will me playing.
+## Your position
+But also, the position that you select will establish your probabilities to score or get better stats. This doesn´t make that being goalkeeper or defender you will not be important, far from it, but being further of your opponent goal, your probabilities fall.
+## Your game
+The game is programmed to be saved even if you exit the application suddenly, your progress will be saved correctly. And in the next time, when you open de game again, you will have the oportunity to follow with the previous game or start a new one.
 
-## Mecánica del Juego  
-1. **Selección de equipo y posición**  
-2. **Simulación de partidos**  
-3. **Registro de estadísticas personales** (goles, asistencias, goles encajados, etc.)  
-4. **Eventos aleatorios** según la posición elegida  
-5. **Comparación de rendimiento con amigos** (clasificación, estadísticas, torneos, etc.)
+# Technologies Used
+This game was produced in VSC, specially in Python, although to use it properly you should have also Discord, and all the plugins what that entails.
 
-## Tecnologías Utilizadas  
-- Se usará python como lenguaje.
-- El IDE usado será VSC.
-  
-Nuestra intención es que nuestro bot proporcione una experiencia única y distinta cada vez que juegues.
-
-## ¿Qué hace?
-- El código simula una temporada de un jugador de fútbol, pudiendo escoger la posición del campo donde quieres jugar, liga y equipo.
-- Se simulará partido a partido hasta el final de temporada, donde se obtendrán los datos finales, como goles, aasistencias o puntos totales.
-  
-## Cómo probarlo
-- Con el código puedes probarlo en IDE´s como VSC o PyCharm, aunque si quieres vivirlo como un bot de Discord, puedes agregarlo con su respectivo código y su Token que viene agregado.
+# How to Test It
+With the code, you can test it in IDEs like VSC or PyCharm. However, if you want to experience it as a Discord bot, you can add it using the respective code and its included Token.
+Below is an example of how the game works. Although you will need to install all the plugins necessaries.
