@@ -21,3 +21,5 @@ Below is an example of how the game works. Although you will need to install all
 The example or 'demo' is made on VSC, due to the facility of his insatllation and to show easily how it works and it was created.
 
 https://youtu.be/UdiTCdzTA2U
+
+URL from Linkedin: www.linkedin.com/in/juan-manuel-gómez-estudillo-788b89209
