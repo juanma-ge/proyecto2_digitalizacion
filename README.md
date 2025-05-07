@@ -17,3 +17,4 @@ This game was produced in VSC, specially in Python, although to use it properly 
 
 # How to Test It
 With the code, you can test it in IDEs like VSC or PyCharm. However, if you want to experience it as a Discord bot, you can add it using the respective code and its included Token.
+Below is an example of how the game works.
