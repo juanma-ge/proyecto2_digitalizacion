@@ -18,3 +18,6 @@ This game was produced in VSC, specially in Python, although to use it properly 
 # How to Test It
 With the code, you can test it in IDEs like VSC or PyCharm. However, if you want to experience it as a Discord bot, you can add it using the respective code and its included Token.
 Below is an example of how the game works. Although you will need to install all the plugins necessaries.
+The example or 'demo' is made on VSC, due to the facility of his insatllation and to show easily how it works and it was created.
+
+https://youtu.be/UdiTCdzTA2U
