@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['cómo_20impactan_20en_20las_20áreas_20de_20la_20empresa_0',['¿Qué tecnologías habilitadoras has empleado y cómo impactan en las áreas de la empresa?',['../md__preguntas.html#autotoc_md21',1,'']]],
+  ['calidad_20y_20consistencia_20de_20los_20datos_1',['¿Qué haces para garantizar la calidad y consistencia de los datos?',['../md__preguntas.html#autotoc_md28',1,'']]],
+  ['cargar_5fpartida_2',['cargar_partida',['../namespace_juego.html#adcbfbb368aa70086341fe5f96f6a93b9',1,'Juego']]],
+  ['communication_3',['Communication',['../md__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md2',1,'']]],
+  ['comunicaciones_20se_20ven_20más_20beneficiadas_20con_20tu_20software_4',['¿Qué áreas de la empresa (producción, negocio, comunicaciones) se ven más beneficiadas con tu software?',['../md__preguntas.html#autotoc_md10',1,'']]],
+  ['comunicaciones_3a_5',['Criterio 6b) Áreas de negocio y comunicaciones:',['../md__preguntas.html#autotoc_md9',1,'']]],
+  ['con_20la_20estrategia_20general_20de_20digitalización_6',['¿Cómo se alinea el software con la estrategia general de digitalización?',['../md__preguntas.html#autotoc_md8',1,'']]],
+  ['con_20las_20no_20digitalizadas_7',['¿Cómo interactúan las áreas digitalizadas con las no digitalizadas?',['../md__preguntas.html#autotoc_md16',1,'']]],
+  ['con_20tecnologías_3a_8',['Criterio 6f) Relación con tecnologías:',['../md__preguntas.html#autotoc_md20',1,'']]],
+  ['con_20tu_20software_9',['con tu software',['../md__preguntas.html#autotoc_md10',1,'¿Qué áreas de la empresa (producción, negocio, comunicaciones) se ven más beneficiadas con tu software?'],['../md__preguntas.html#autotoc_md13',1,'¿Qué áreas de la empresa son más susceptibles de ser digitalizadas con tu software?']]],
+  ['concretas_20propondrías_20para_20mitigarlas_10',['¿Qué medidas concretas propondrías para mitigarlas?',['../md__preguntas.html#autotoc_md25',1,'']]],
+  ['consistencia_20de_20los_20datos_11',['¿Qué haces para garantizar la calidad y consistencia de los datos?',['../md__preguntas.html#autotoc_md28',1,'']]],
+  ['continuar_5fpartida_12',['continuar_partida',['../namespace_juego.html#ab2274bcbb9a14e07788e6d9274e64991',1,'Juego']]],
+  ['contribute_13',['How to contribute',['../md__c_o_n_t_r_i_b_u_t_i_n_g.html',1,'']]],
+  ['contributions_14',['Contributions',['../md__c_o_n_t_r_i_b_u_t_i_n_g.html#autotoc_md4',1,'']]],
+  ['criterio_206a_20objetivos_20estratégicos_3a_15',['Criterio 6a) Objetivos estratégicos:',['../md__preguntas.html#autotoc_md6',1,'']]],
+  ['criterio_206b_20áreas_20de_20negocio_20y_20comunicaciones_3a_16',['Criterio 6b) Áreas de negocio y comunicaciones:',['../md__preguntas.html#autotoc_md9',1,'']]],
+  ['criterio_206c_20áreas_20susceptibles_20de_20digitalización_3a_17',['Criterio 6c) Áreas susceptibles de digitalización:',['../md__preguntas.html#autotoc_md12',1,'']]],
+  ['criterio_206d_20encaje_20de_20áreas_20digitalizadas_20ad_20_3a_18',['Criterio 6d) Encaje de áreas digitalizadas (AD):',['../md__preguntas.html#autotoc_md15',1,'']]],
+  ['criterio_206e_20necesidades_20presentes_20y_20futuras_3a_19',['Criterio 6e) Necesidades presentes y futuras:',['../md__preguntas.html#autotoc_md18',1,'']]],
+  ['criterio_206f_20relación_20con_20tecnologías_3a_20',['Criterio 6f) Relación con tecnologías:',['../md__preguntas.html#autotoc_md20',1,'']]],
+  ['criterio_206g_20brechas_20de_20seguridad_3a_21',['Criterio 6g) Brechas de seguridad:',['../md__preguntas.html#autotoc_md23',1,'']]],
+  ['criterio_206h_20tratamiento_20de_20datos_20y_20análisis_3a_22',['Criterio 6h) Tratamiento de datos y análisis:',['../md__preguntas.html#autotoc_md26',1,'']]]
+];
