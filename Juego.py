@@ -1,3 +1,13 @@
+"""
+Football Career Simulator - Devlog Update
+
+A soccer career simulation game where players can:
+- Choose their team and position from multiple leagues
+- Play through quick seasons
+- See their performance affect career outcomes
+- Save and resume progress
+"""
+
 import random
 import json
 import os
@@ -5,10 +15,22 @@ import os
 ARCHIVO_PARTIDA = "partida_guardada.json"
 
 def guardar_partida(datos):
+    """
+    Saves the current game state to a JSON file.
+
+    Args:
+        datos (dict): Dictionary containing all game data to be saved
+    """
     with open(ARCHIVO_PARTIDA, 'w') as archivo:
         json.dump(datos, archivo)
 
 def cargar_partida():
+    """
+    Loads a saved game from the JSON file.
+
+    Returns:
+        dict: The saved game data if exists, None otherwise
+    """
     try:
         with open(ARCHIVO_PARTIDA, 'r') as archivo:
             return json.load(archivo)
@@ -16,6 +38,10 @@ def cargar_partida():
         return None
 
 def mostrar_menu():
+    """
+    Displays the main menu and handles user navigation.
+    Dynamically shows continue option if saved game exists.
+    """
     partida_guardada = cargar_partida()
     
     while True:
@@ -44,6 +70,12 @@ def mostrar_menu():
             print("Opción no válida, por favor elige una de las opciones.")
 
 def mostrar_equipos():
+    """
+    Returns a dictionary of available leagues and their teams.
+
+    Returns:
+        dict: Dictionary with leagues as keys and team lists as values
+    """
     equipos = {
         "Premier League": ["Manchester United", "Manchester City", "Arsenal", "Chelsea", "Tottenham", "Leicester City", "Brentford", "Nottingham Forest", "Newcastle",
          "Bournemouth", "Aston Villa", "Fulham", "Brighton", "Crystal Palace", "West Ham", "Wolves", "Ipswich Town", "Southampton"],
@@ -66,6 +98,12 @@ def mostrar_equipos():
     return equipos
 
 def seleccionar_posicion():
+    """
+    Handles player position selection.
+
+    Returns:
+        str: The selected position
+    """
     posiciones = ["Portero", "Defensa", "Mediocampista", "Delantero"]
     while True:
         print("\nSelecciona tu posición:")
@@ -81,6 +119,15 @@ def seleccionar_posicion():
             print("Entrada no válida, por favor ingresa un número.")
 
 def seleccionar_liga_y_equipo(equipos):
+    """
+    Handles league and team selection.
+
+    Args:
+        equipos (dict): Dictionary of available leagues and teams
+
+    Returns:
+        tuple: (selected league, selected team)
+    """
     while True:
         print("\nSelecciona una liga:")
         ligas = list(equipos.keys())
@@ -112,6 +159,17 @@ def seleccionar_liga_y_equipo(equipos):
             print("Entrada no válida, por favor ingresa un número.")
 
 def simular_partido(posicion, equipo_seleccionado, equipo_rival):
+    """
+    Simulates a match based on player position and calculates results.
+
+    Args:
+        posicion (str): Player's position
+        equipo_seleccionado (str): Player's team
+        equipo_rival (str): Opponent team
+
+    Returns:
+        int: Points earned (0, 1, or 3)
+    """
     print(f"\n{equipo_seleccionado} vs {equipo_rival}")
     
     if posicion == "Delantero":
@@ -123,13 +181,13 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     elif posicion == "Defensa":
         probabilidad_gol = 0.3
         probabilidad_asistencia = 0.7
-    else:  # Esta posición es la de portero
+    else:  # Portero
         probabilidad_gol = 0.1
         probabilidad_asistencia = 0.1
 
     goles = 0
     asistencias = 0
-    for _ in range(3):  # Simulamos 3 oportunidades de gol o asistencia
+    for _ in range(3):  # 3 oportunidades de gol/asistencia
         if random.random() < probabilidad_gol:
             goles += 1
         if random.random() < probabilidad_asistencia:
@@ -151,6 +209,12 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
     return puntos
 
 def continuar_partida(partida_guardada):
+    """
+    Continues a saved game from where it was left off.
+
+    Args:
+        partida_guardada (dict): The saved game data to continue
+    """
     print("\n--- CONTINUANDO PARTIDA GUARDADA ---")
     print(f"Posición: {partida_guardada['posicion']}")
     print(f"Liga: {partida_guardada['liga']}")
@@ -164,7 +228,7 @@ def continuar_partida(partida_guardada):
         equipos_rivales = equipos[partida_guardada['liga']].copy()
         equipos_rivales.remove(partida_guardada['equipo'])
         
-        # Filtrar equipos contra los que ya se jugó
+        # Filtrar equipos ya jugados
         equipos_restantes = [eq for eq in equipos_rivales if eq not in partida_guardada['partidos_jugados']]
         
         puntos_totales = partida_guardada['puntos_totales']
@@ -175,10 +239,8 @@ def continuar_partida(partida_guardada):
                                    equipo_rival)
             puntos_totales += puntos
             
-            # Actualiza los partidos jugados
             partida_guardada['partidos_jugados'].append(equipo_rival)
             
-            # Guarda el progreso después de cada partido
             datos_guardar = {
                 'posicion': partida_guardada['posicion'],
                 'liga': partida_guardada['liga'],
@@ -189,7 +251,6 @@ def continuar_partida(partida_guardada):
             }
             guardar_partida(datos_guardar)
             
-            # Verificar si se completó la temporada
             if len(partida_guardada['partidos_jugados']) >= partida_guardada['total_partidos']:
                 print(f"\n¡Temporada completada! Puntos totales: {puntos_totales}")
                 if os.path.exists(ARCHIVO_PARTIDA):
@@ -201,7 +262,9 @@ def continuar_partida(partida_guardada):
         print("Volviendo al menú principal...")
 
 def iniciar_modo_carrera():
-    # Verificar si hay partida guardada
+    """
+    Starts a new career mode game.
+    """
     partida_guardada = cargar_partida()
     if partida_guardada:
         confirmacion = input("Ya tienes una partida guardada. ¿Deseas empezar una nueva? (s/n): ").lower()
@@ -222,7 +285,6 @@ def iniciar_modo_carrera():
     puntos_totales = 0
     partidos_jugados = []
     
-    # Guardar estado inicial
     datos_guardar = {
         'posicion': posicion,
         'liga': liga_seleccionada,
@@ -238,12 +300,10 @@ def iniciar_modo_carrera():
         puntos_totales += puntos
         partidos_jugados.append(equipo_rival)
         
-        # Actualiza la partida guardada
         datos_guardar['puntos_totales'] = puntos_totales
         datos_guardar['partidos_jugados'] = partidos_jugados
         guardar_partida(datos_guardar)
         
-        # Verifica si se completó la temporada
         if len(partidos_jugados) >= total_partidos:
             print(f"\n¡Temporada completada! Puntos totales: {puntos_totales}")
             if os.path.exists(ARCHIVO_PARTIDA):
@@ -253,6 +313,9 @@ def iniciar_modo_carrera():
         input("\nPresiona Enter para continuar al siguiente partido...")
 
 def main():
+    """
+    Main entry point that starts the game.
+    """
     mostrar_menu()
 
 if __name__ == "__main__":  

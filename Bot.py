@@ -1,23 +1,39 @@
+"""
+Discord Football Career Simulator Bot
+
+A Discord bot that allows users to:
+- Start a football career simulation
+- Select position, league and team
+- Simulate matches against other teams
+- Track performance and points
+"""
+
 import random
 import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
+# Load environment variables
 load_dotenv()
 
-# Configura el bot
+# Configure bot
 intents = discord.Intents.all()
-intents.message_content = True  # Necesario para leer mensajes
+intents.message_content = True  # Required to read messages
 bot = commands.Bot(command_prefix="!", intents=intents)
 
 @bot.event
 async def on_ready():
+    """Callback when the bot successfully connects to Discord"""
     print(f'✅ Bot conectado como {bot.user}')
 
-# Listado de equipos (igual que antes)
 def mostrar_equipos():
+    """
+    Returns a dictionary of available leagues and their teams.
+    
+    Returns:
+        dict: Dictionary with leagues as keys and lists of teams as values
+    """
     equipos = {
         "Premier League": ["Manchester United", "Manchester City", "Arsenal", "Chelsea", "Tottenham", "Leicester City", "Brentford", "Nottingham Forest", "Newcastle",
          "Bournemouth", "Aston Villa", "Fulham", "Brighton", "Crystal Palace", "West Ham", "Wolves", "Ipswich Town", "Southampton"],
@@ -39,8 +55,18 @@ def mostrar_equipos():
     }
     return equipos
 
-# Simulación del partido (igual que antes)
 def simular_partido(posicion, equipo_seleccionado, equipo_rival):
+    """
+    Simulates a match based on player position and calculates results.
+    
+    Args:
+        posicion (str): Player's position
+        equipo_seleccionado (str): Player's team
+        equipo_rival (str): Opponent team
+        
+    Returns:
+        tuple: (points, goals, assists, result)
+    """
     if posicion == "Delantero":
         probabilidad_gol = 0.5
         probabilidad_asistencia = 0.2
@@ -69,10 +95,18 @@ def simular_partido(posicion, equipo_seleccionado, equipo_rival):
 
 @bot.command(name="iniciar_carrera")
 async def iniciar_carrera(ctx):
+    """
+    Main command to start a new career simulation.
+    Guides user through position, league and team selection,
+    then simulates matches against all other teams in the league.
+    
+    Args:
+        ctx: Discord command context
+    """
     try:
         equipos = mostrar_equipos()
         
-        # Seleccionar posición
+        # Position selection
         posiciones = ["Portero", "Defensa", "Mediocampista", "Delantero"]
         posicion_msg = await ctx.send("Selecciona tu posición:\n" + "\n".join(f"{i}. {p}" for i, p in enumerate(posiciones, 1)))
 
@@ -82,14 +116,14 @@ async def iniciar_carrera(ctx):
         posicion_msg = await bot.wait_for("message", check=check)
         posicion = posiciones[int(posicion_msg.content) - 1]
 
-        # Seleccionar liga
+        # League selection
         ligas = list(equipos.keys())
         await ctx.send("Selecciona una liga:\n" + "\n".join(f"{i}. {l}" for i, l in enumerate(ligas, 1)))
 
         liga_msg = await bot.wait_for("message", check=check)
         liga_seleccionada = ligas[int(liga_msg.content) - 1]
 
-        # Seleccionar equipo
+        # Team selection
         equipos_liga = equipos[liga_seleccionada]
         await ctx.send(f"Selecciona un equipo de la {liga_seleccionada}:\n" + "\n".join(f"{i}. {e}" for i, e in enumerate(equipos_liga, 1)))
 
@@ -98,7 +132,7 @@ async def iniciar_carrera(ctx):
 
         await ctx.send(f"Has seleccionado ser un {posicion} en el equipo {equipo_seleccionado} de la {liga_seleccionada}.")
 
-        # Simular partidos
+        # Simulate matches
         equipos_rivales = equipos[liga_seleccionada].copy()
         equipos_rivales.remove(equipo_seleccionado)
         random.shuffle(equipos_rivales)
@@ -117,7 +151,7 @@ async def iniciar_carrera(ctx):
                 "Presiona Enter para continuar..."
             )
             
-            # Esperar a que el usuario presione Enter
+            # Wait for user to press Enter
             def enter_check(m):
                 return m.author == ctx.author and m.channel == ctx.channel and m.content == ""
             
@@ -129,5 +163,5 @@ async def iniciar_carrera(ctx):
         await ctx.send(f"Ocurrió un error: {e}")
         print(f"Error: {e}")
 
-# Ejecutar el bot
+# Run the bot
 bot.run(os.getenv("BOTTOKEN"))
