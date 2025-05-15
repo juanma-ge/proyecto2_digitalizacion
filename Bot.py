@@ -148,12 +148,12 @@ async def iniciar_carrera(ctx):
                 f"Resultado: {resultado}\n"
                 f"Puntos obtenidos: {puntos}\n"
                 f"Puntos totales: {puntos_totales}\n"
-                "Presiona Enter para continuar..."
+                "Presiona "." para continuar..."
             )
             
-            # Wait for user to press Enter
+            # Wait for user to press "."
             def enter_check(m):
-                return m.author == ctx.author and m.channel == ctx.channel and m.content == ""
+                return m.author == ctx.author and m.channel == ctx.channel and m.content.strip() == "."
             
             await bot.wait_for("message", check=enter_check)
 
@@ -163,5 +163,6 @@ async def iniciar_carrera(ctx):
         await ctx.send(f"Ocurrió un error: {e}")
         print(f"Error: {e}")
 
+load_dotenv()
 # Run the bot
 bot.run(os.getenv("BOTTOKEN"))
